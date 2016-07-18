@@ -1,0 +1,20 @@
+plugins {
+	id "idea"
+}
+
+idea {
+	project {
+		jdkName = "1.8"
+		languageLevel = "1.8"
+
+		wildcards.add "Ratpack.groovy"
+		vcs = 'Git'
+
+		ipr.withXml { provider ->
+			def node = provider.asNode()
+			["codeStyle", "gradle"].each {
+				node.append(new XmlParser().parse(file("gradle/idea/${it}.xml")))
+			}
+		}
+	}
+}
